@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import { score, updateScore } from "./global";
 //import FpsText from "../objects/fpsText";
 
-export default class MainScene extends Phaser.Scene {
+export default class FourthScene extends Phaser.Scene {
     private platforms: Phaser.Physics.Arcade.StaticGroup;
     private player: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     //fpsText: FpsText;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "FourthScene" });
     }
 
     create() {
@@ -25,9 +25,9 @@ export default class MainScene extends Phaser.Scene {
             "platform"
         ) as Phaser.Physics.Arcade.Sprite;
         ground.setScale(2).refreshBody();
-        this.platforms.create(400, 400, "platform");
-        this.platforms.create(50, 250, "platform");
-        this.platforms.create(750, 220, "platform");
+        this.platforms.create(100, 100, "platform");
+        this.platforms.create(300, 250, "platform");
+        this.platforms.create(40, 400, "platform");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -61,7 +61,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 5,
+            repeat: 2,
             setXY: { x: 12, y: 0, stepX: 70 },
         });
         this.stars.children.iterate((c) => {
@@ -109,9 +109,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     private handleHitBomb() {
-        this.scene.start("SecondScene");
+        this.scene.start("MainScene");
     }
-
     private handleCollectStar(
         player:
             | Phaser.Types.Physics.Arcade.GameObjectWithBody
@@ -128,19 +127,12 @@ export default class MainScene extends Phaser.Scene {
                 const child = c as Phaser.Physics.Arcade.Image;
                 child.enableBody(true, child.x, 0, true, true);
                 return true;
-            });
-            const x =
-                this.player.x < 400
-                    ? Phaser.Math.Between(400, 800)
-                    : Phaser.Math.Between(0, 400);
-            const bomb: Phaser.Physics.Arcade.Image = this.bombs.create(
-                x,
-                16,
-                "bomb"
-            );
+            })
+            const x = this.player.x < 400 ? Phaser.Math.Between(400,800) : Phaser.Math.Between(0, 400);
+            const bomb: Phaser.Physics.Arcade.Image = this.bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            bomb.setVelocity(Phaser.Math.Between(-200,200), 20);
         }
     }
 

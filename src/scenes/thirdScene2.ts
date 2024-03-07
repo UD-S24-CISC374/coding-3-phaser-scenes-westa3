@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import { score, updateScore } from "./global";
 //import FpsText from "../objects/fpsText";
 
-export default class MainScene extends Phaser.Scene {
+export default class ThirdScene extends Phaser.Scene {
     private platforms: Phaser.Physics.Arcade.StaticGroup;
     private player: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     //fpsText: FpsText;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "ThirdScene" });
     }
 
     create() {
@@ -25,9 +25,9 @@ export default class MainScene extends Phaser.Scene {
             "platform"
         ) as Phaser.Physics.Arcade.Sprite;
         ground.setScale(2).refreshBody();
-        this.platforms.create(400, 400, "platform");
-        this.platforms.create(50, 250, "platform");
-        this.platforms.create(750, 220, "platform");
+        this.platforms.create(100, 400, "platform");
+        this.platforms.create(7, 250, "platform");
+        this.platforms.create(750, 200, "platform");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -61,7 +61,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 5,
+            repeat: 3,
             setXY: { x: 12, y: 0, stepX: 70 },
         });
         this.stars.children.iterate((c) => {
@@ -109,7 +109,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     private handleHitBomb() {
-        this.scene.start("SecondScene");
+        this.scene.start("FourthScene");
     }
 
     private handleCollectStar(

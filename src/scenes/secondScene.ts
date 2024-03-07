@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import { score, updateScore } from "./global";
 //import FpsText from "../objects/fpsText";
 
-export default class MainScene extends Phaser.Scene {
+export default class SecondScene extends Phaser.Scene {
     private platforms: Phaser.Physics.Arcade.StaticGroup;
     private player: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     //fpsText: FpsText;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "SecondScene" });
     }
 
     create() {
@@ -25,9 +25,9 @@ export default class MainScene extends Phaser.Scene {
             "platform"
         ) as Phaser.Physics.Arcade.Sprite;
         ground.setScale(2).refreshBody();
-        this.platforms.create(400, 400, "platform");
-        this.platforms.create(50, 250, "platform");
-        this.platforms.create(750, 220, "platform");
+        this.platforms.create(100, 400, "platform");
+        this.platforms.create(500, 150, "platform");
+        this.platforms.create(500, 300, "platform");
 
         this.player = this.physics.add.sprite(100, 450, "dude");
         this.player.setBounce(0.2);
@@ -61,7 +61,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 5,
+            repeat: 4,
             setXY: { x: 12, y: 0, stepX: 70 },
         });
         this.stars.children.iterate((c) => {
@@ -109,9 +109,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     private handleHitBomb() {
-        this.scene.start("SecondScene");
+        this.scene.start("ThirdScene");
     }
-
     private handleCollectStar(
         player:
             | Phaser.Types.Physics.Arcade.GameObjectWithBody
@@ -120,7 +119,6 @@ export default class MainScene extends Phaser.Scene {
     ) {
         const star = s as Phaser.Physics.Arcade.Image;
         star.disableBody(true, true);
-
         updateScore();
         this.scoreText.setText("score: " + score);
         if (this.stars.countActive(true) === 0) {
